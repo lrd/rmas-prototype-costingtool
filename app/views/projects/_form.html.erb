@@ -1,0 +1,42 @@
+<%= form_for(@project) do |f| %>
+  <% if @project.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
+
+      <ul>
+      <% @project.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%
+  proposal_options = [['', 0]]
+  @proposals.each do |p|
+    proposal_options << [p.title, p.id]
+  end
+  %>
+
+  <div class="clearfix">
+    <%= f.label :proposal_id %>
+    <div class='input'>
+      <% if @project.id.nil? %>
+      <%= f.select :proposal_id, options_for_select(proposal_options, @project.proposal_id || 0) %>
+      <% else %>
+      <p><%= @project.proposal.title %></p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="clearfix">
+    <%= f.label :status %>
+    <div class='input'>
+      <%= f.select :status, options_for_select([['New'], ['Submitted'], ['Accepted'], ['Rejected']]) %>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= f.submit :class => 'btn primary' %>
+  </div>
+<% end %>

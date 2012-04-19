@@ -1,0 +1,46 @@
+<div class='page-header'>
+  <h1>Projects</h1>
+</div>
+
+<div class='row'>
+  <div class='span12'>
+
+    <table class='zebra-striped'>
+      <tr>
+        <th style='width: 40%'>Proposal</th>
+        <th>Status</th>
+        <th style='width: 10%'></th>
+        <th style='width: 10%'></th>
+      </tr>
+
+    <% @projects.each do |project| %>
+      <tr>
+        <td><%= link_to project.proposal.title, project %></td>
+        <td><%= project.status %></td>
+        <td><%= link_to 'Edit', edit_project_path(project), :class => 'btn' %>
+        <td><%= link_to 'Delete', project, confirm: 'Are you sure?', method: :delete, :class => 'btn danger'  %></td>
+      </tr>
+    <% end %>
+    </table>
+
+    <%= link_to 'New Project', new_project_path, :class => 'btn primary' %>
+  </div>
+
+  <div class='span4'>
+  <h3 class='proposals'>Proposals <a href='<%= proposal_sync_url %>?redir=<%= request.fullpath %>' class='btn small' style='float: right;margin-top: 2px'>Synchronise</a></h3>
+  
+    <% unless @proposals.empty? then %>
+      <% @proposals.each do |proposal| %>
+      <p><%= proposal.title %>
+      <% if proposal.archived %>
+        <span class='label warning'>archived</span>
+      <% end %>
+      </p>
+      <% end %>
+    <% else %>
+      <p>No proposals</p>
+    <% end %>
+
+    
+  </div>
+</div>

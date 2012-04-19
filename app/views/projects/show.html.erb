@@ -1,0 +1,50 @@
+
+<div class='page-header'>
+  <h1><%= @project.proposal.title %>
+  <small><%= @project.status %></small></h1>
+</div>
+
+<div class='row'>
+  <div class='span12'>
+
+  	<% if notice then %>
+	<div class='alert-message success'>
+		<a class='close' href='#'>x</a>
+		<p><%= notice %></p>
+	</div>
+	<% end %>
+
+	<% if @project.proposal.archived %>
+	<div class="alert-message warning">
+	  <a class="close" href="#">×</a>
+	  <p>The proposal attached to this project has been <strong>deleted at its source tool</strong>. It will no longer be updated.</p>
+	</div>
+	<% end %>
+
+	<%= simple_format @project.proposal.description %>
+
+	<!--<div class='well show-well'>
+		<strong>RMAS ID:</strong> <code>bla</code>
+	</div>-->
+
+	<div class='links'>
+		<%= link_to 'Edit', edit_project_path(@project), :class => 'btn' %>
+		<%= link_to 'Back', projects_path, :class => 'btn' %>
+	</div>
+  </div>
+  <div class='span4'>
+	  <h3 class='proposals'>Proposals <a href='<%= proposal_sync_url %>?redir=<%= request.fullpath %>' class='btn small' style='float: right;margin-top: 2px'>Synchronise</a></h3>
+	  
+	  <% unless @proposals.empty? then %>
+	      <% @proposals.each do |proposal| %>
+	      <p><%= proposal.title %>
+	      <% if proposal.archived %>
+	        <span class='label warning'>archived</span>
+	      <% end %>
+	      </p>
+	      <% end %>
+	    <% else %>
+	      <p>No proposals</p>
+	  <% end %>
+  </div>
+</div>
